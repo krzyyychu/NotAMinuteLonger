@@ -19,9 +19,9 @@ class StopWatch(tkinter.Frame):
         self.__setTime(self._elapsedtime)
         durationLabel.pack(side=tkinter.LEFT)
 
-        playButton = tkinter.Button(self, text="Start", command=self.Start)
+        playButton = tkinter.Button(self, text="Start", command=self.start)
         playButton.pack(side=tkinter.LEFT)
-        stopButton = tkinter.Button(self, text="Stop", command=self.Stop)
+        stopButton = tkinter.Button(self, text="Stop", command=self.stop)
         stopButton.pack(side=tkinter.LEFT)
     
     def __setTime(self, elapsed):
@@ -37,14 +37,14 @@ class StopWatch(tkinter.Frame):
         self.__setTime(self._elapsedtime)
         self._timer = self.after(1000, self.__update)  
 
-    def Start(self):                                                     
+    def start(self):
         """ Start the stopwatch, ignore if running. """
         if not self._running:            
             self._start = time.time() - self._elapsedtime
             self.__update()
             self._running = True        
     
-    def Stop(self):                                    
+    def stop(self):
         """ Stop the stopwatch, ignore if stopped. """
         if self._running:
             self.after_cancel(self._timer)            
@@ -115,5 +115,5 @@ sw5.pack()
 
 
 # taskFrame.pack()
-
-root.mainloop()
+if __name__ == "__main__":
+    root.mainloop()
