@@ -1,9 +1,23 @@
 import tkinter
-from ActivityTracker import ActivityTracker
+from src.ActivityTracker import ActivityTracker
 from TkStopwatchWidget import TkStopwatchWidget
+from TkSummaryWidget import TkSummaryWidget
 
 
 class TkActivityManagerWidget(tkinter.Frame):
+    """Root class for activity manager.
+
+    Has:
+    + tkinter.Frame
+    + list of stopwatches
+    + summary widget
+    + activity tracker
+    - settings object
+
+    Does:
+    manages stopwatch list so only 1 stopwatch runs in parallel
+    """
+
     def __init__(self, parent=None, num_of_stopwatches=5, inactivity_period=3, **kw):
         tkinter.Frame.__init__(self, parent, kw)
         self.num_of_stopwatches = num_of_stopwatches
@@ -14,8 +28,10 @@ class TkActivityManagerWidget(tkinter.Frame):
             stopwatch.pack()
         self.current_stopwatch_id = 0
         self.current_stopwatch_active = False
-        #duration_label = tkinter.Label(self, textvariable="QPA")
-        #duration_label.pack()
+
+        self.summary = TkSummaryWidget(self, self.stopwatches)
+        self.summary.pack()
+
         self.activity_tracker = ActivityTracker(inactivity_period, self.on_activity, self.on_inactivity)
 
     def on_inactivity(self):

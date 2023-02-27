@@ -2,7 +2,7 @@ import tkinter
 from threading import Thread
 from time import sleep
 
-from TkStopwatchWidget import TkStopwatchWidget
+from src.TkStopwatchWidget import TkStopwatchWidget
 
 
 class TkSummaryWidget(tkinter.Frame):
