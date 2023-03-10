@@ -67,6 +67,8 @@ class TkStopwatchWidget(tkinter.Frame):
 
     def get_time(self):
         return self._elapsed_time
+    def get_time_string(self):
+        return self._time_string
 
 
 if __name__ == "__main__":
