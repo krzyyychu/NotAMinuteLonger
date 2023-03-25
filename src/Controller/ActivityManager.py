@@ -60,7 +60,7 @@ class ActivityManager:
 
 if __name__ == "__main__":
     root = tkinter.Tk()
-    tam = ActivityManager(root)
+    am = ActivityManager(root)
     root.title("ActivityTracker")
     root.resizable(width="false", height="false")
     root.mainloop()
