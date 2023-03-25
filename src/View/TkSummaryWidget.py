@@ -2,7 +2,7 @@ import tkinter
 from threading import Thread
 from time import sleep
 
-from src.TkStopwatchWidget import TkStopwatchWidget
+from src.View.TkStopwatchWidget import TkStopwatchWidget
 
 
 class TkSummaryWidget(tkinter.Frame):
@@ -37,11 +37,12 @@ class TkSummaryWidget(tkinter.Frame):
         self._time_string.set('%02d:%02d:%02d' % (hours, minutes, seconds))
 
 
-class TkActivityManagerMock(tkinter.Frame):
-    #for testing purposes
+class ActivityManagerMock():
+    """Mock for testing purposes"""
     def __init__(self, parent=None, **kw):
-        tkinter.Frame.__init__(self, parent, kw)
+        self.frame = tkinter.Frame(parent, kw)
         self.parent = parent
+        self.frame.pack()
 
     def notice_start(self, stopwatch_id):
         pass
@@ -52,9 +53,8 @@ class TkActivityManagerMock(tkinter.Frame):
 
 if __name__ == "__main__":
     root = tkinter.Tk()
-    tam_mock = TkActivityManagerMock(root)
-    tam_mock.pack()
-    stopwatches = [TkStopwatchWidget(tam_mock) for x in range(4)]
+    am_mock = ActivityManagerMock(root)
+    stopwatches = [TkStopwatchWidget(tk_parent=root, controller=am_mock) for x in range(4)]
     for stopwatch in stopwatches:
         stopwatch.pack()
     tk_summary = TkSummaryWidget(root, stopwatches)

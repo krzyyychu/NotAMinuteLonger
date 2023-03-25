@@ -5,17 +5,18 @@ import time
 class TkStopwatchWidget(tkinter.Frame):
     """Simple stopwatch widget"""
 
-    def __init__(self, parent=None, stopwatch_id=0, **kw):
-        tkinter.Frame.__init__(self, parent, kw)
-        self.parent = parent
-        self.stopwatch_id = stopwatch_id
+    def __init__(self, tk_parent=None, controller=None,  stopwatch_id=0, **kw):
+        tkinter.Frame.__init__(self, tk_parent, kw)
+        self.parent = tk_parent
+        self._controller = controller
+        self._stopwatch_id = stopwatch_id
         self._start = 0.0
         self._elapsed_time = 0.0
         self._running = 0
-        self._time_string = tkinter.StringVar()
+        self._time_string = tkinter.StringVar(self, "00:00:00")
 
-        task_name = tkinter.Entry(self, width=24)
-        task_name.pack(side=tkinter.LEFT)
+        self.task_name = tkinter.Entry(self, width=24)
+        self.task_name.pack(side=tkinter.LEFT)
 
         duration_label = tkinter.Label(self, textvariable=self._time_string)
         self.__setTime(self._elapsed_time)
@@ -56,19 +57,25 @@ class TkStopwatchWidget(tkinter.Frame):
 
     def start_clicked(self):
         self.start()
-        self.parent.notice_start(self.stopwatch_id)
+        if self._controller:
+            self._controller.notice_start(self._stopwatch_id)
 
     def stop_clicked(self):
         self.stop()
-        self.parent.notice_stop(self.stopwatch_id)
+        if self._controller:
+            self._controller.notice_stop(self._stopwatch_id)
 
     def get_id(self):
-        return self.stopwatch_id
+        return self._stopwatch_id
 
     def get_time(self):
         return self._elapsed_time
+
     def get_time_string(self):
-        return self._time_string
+        return self._time_string.get()
+
+    def get_task_name(self):
+        return self.task_name.get()
 
 
 if __name__ == "__main__":
