@@ -2,7 +2,7 @@ import tkinter
 from threading import Thread
 from time import sleep
 
-from src.View.TkStopwatchWidget import TkStopwatchWidget
+from View.TkStopwatchWidget import TkStopwatchWidget
 
 
 class TkSummaryWidget(tkinter.Frame):
@@ -37,7 +37,7 @@ class TkSummaryWidget(tkinter.Frame):
         self._time_string.set('%02d:%02d:%02d' % (hours, minutes, seconds))
 
 
-class ActivityManagerMock():
+class ActivityManagerMock:
     """Mock for testing purposes"""
     def __init__(self, parent=None, **kw):
         self.frame = tkinter.Frame(parent, kw)

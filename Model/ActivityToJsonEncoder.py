@@ -1,6 +1,6 @@
 from json import JSONEncoder
-from src.Controller.ActivityManager import ActivityManager
-from src.View.TkStopwatchWidget import TkStopwatchWidget
+from Controller.ActivityManager import ActivityManager
+from View.TkStopwatchWidget import TkStopwatchWidget
 
 from tkinter import Tk #TODO: probably can be replaced by some mock
 

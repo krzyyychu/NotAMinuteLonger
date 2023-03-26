@@ -1,7 +1,7 @@
 import tkinter
-from src.Controller.ActivityTracker import ActivityTracker
-from src.View.TkStopwatchWidget import TkStopwatchWidget
-from src.View.TkSummaryWidget import TkSummaryWidget
+from Controller.ActivityTracker import ActivityTracker
+from View.TkStopwatchWidget import TkStopwatchWidget
+from View.TkSummaryWidget import TkSummaryWidget
 
 
 class ActivityManager:
