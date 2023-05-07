@@ -3,8 +3,8 @@ import os
 import re
 from datetime import datetime
 from tkinter import Tk, Menu, messagebox
-from Controller.ActivityManager import ActivityManager
-from Model.ActivityToJsonEncoder import ActivityToJsonEncoder
+from controller.ActivityManager import ActivityManager
+from model.ActivityToJsonEncoder import ActivityToJsonEncoder
 
 
 class NotAMinuteLongerApp:
