@@ -20,6 +20,10 @@ class ActivityData:
         if 0 <= stopwatch_id < self._stopwatch_count:
             self._stopwatch_data[stopwatch_id].time += value
 
+    def update_description(self, stopwatch_id, new_description):
+        if 0 <= stopwatch_id < self._stopwatch_count:
+            self._stopwatch_data[stopwatch_id].description = new_description
+
     def get_time(self, stopwatch_id):
         if 0 <= stopwatch_id < self._stopwatch_count:
             return self._stopwatch_data[stopwatch_id].time
