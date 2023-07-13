@@ -49,7 +49,6 @@ class ActivityTracker:
                 if self.elapsed_time >= self.inactivity_period and self._user_active is True:
                     self._user_active = False
                     self.elapsed_time = 0
-                #    self.inactivity_callback()
 
     def activate(self):
         self._tracker_activated = True
