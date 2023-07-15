@@ -1,7 +1,8 @@
 
 
 class StopwatchData:
-    def __init__(self):
+    def __init__(self, id):
+        self.id = id
         self.description = ""
         self.time = 0
 
@@ -14,7 +15,7 @@ class ActivityData:
         self._stopwatch_count = stopwatch_count
         self._stopwatch_data = []
         for stopwatch_id in range(stopwatch_count):
-            self._stopwatch_data.append(StopwatchData())
+            self._stopwatch_data.append(StopwatchData(stopwatch_id))
 
     def add_time(self, stopwatch_id, value):
         if 0 <= stopwatch_id < self._stopwatch_count:
@@ -34,4 +35,7 @@ class ActivityData:
     def get_description(self, stopwatch_id):
         if 0 <= stopwatch_id < self._stopwatch_count:
             return self._stopwatch_data[stopwatch_id].description
+
+    def get_stopwatches(self):
+        return self._stopwatch_data
 

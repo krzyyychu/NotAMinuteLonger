@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 from tkinter import Tk, Menu, messagebox
 from controller.ActivityManager import ActivityManager
-from model.ActivityToJsonEncoder import ActivityToJsonEncoder
+from model.ActivityDataEncoder import ActivityDataEncoder
 
 
 class NotAMinuteLongerApp:
@@ -50,17 +50,18 @@ class NotAMinuteLongerApp:
         print("recovering!")
 
     @staticmethod
-    def create_file_name(self):
+    def create_file_name():
         return "tasks_"+datetime.now().strftime("%Y_%m_%d_%H_%M_%S")+".json"
 
     def on_close(self):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
             try:
                 with open(self.create_file_name(), "w+") as file:
-                    json_encoder = ActivityToJsonEncoder()
-                    json_formatted = json.dumps(json.loads(json_encoder.encode(self.am)), indent=2)
+                    json_encoder = ActivityDataEncoder()
+                    json_formatted = json.dumps(json.loads(json_encoder.encode(self.am.activity_data)), indent=2)
                     file.write(json_formatted)
-            except:
+            except Exception as e:
+                print(e)
                 messagebox.askokcancel("Ouć", "Something went terribly wrong, data will not be saved!")
             self.root.destroy()
 
