@@ -5,26 +5,27 @@ from model.ActivityData import ActivityData
 
 
 class ActivityDataEncoderTest(unittest.TestCase):
-
     def test_encoding_empty_ActivityData(self):
-        data = ActivityData(stopwatch_count=0)
+        data = ActivityData()
         output = ActivityDataEncoder().encode(data)
         self.assertEqual(
             output,
             '{"stopwatches": []}')
 
-    def test_encoding_empty_stopwatches(self):
-        data = ActivityData(stopwatch_count=2)
+    def test_encoding_stopwatches_without_description(self):
+        data = ActivityData()
+        data.add_time(stopwatch_id=0, value=0)
+        data.add_time(stopwatch_id=1, value=1)
         output = ActivityDataEncoder().encode(data)
         self.assertEqual(
             output,
             '{"stopwatches": ['
                 '{"task_0": 0}, '
-                '{"task_1": 0}'
+                '{"task_1": 1}'
             ']}')
 
     def test_encoding(self):
-        data = ActivityData(stopwatch_count=3)
+        data = ActivityData()
         data.update_description(0, "fooling around")
         data.update_description(1, "dog walking")
         data.update_description(2, "dog cuddling")
@@ -39,7 +40,6 @@ class ActivityDataEncoderTest(unittest.TestCase):
                 '{"dog walking": 42}, '
                 '{"dog cuddling": 123}'
             ']}')
-
 
 
 if __name__ == '__main__':

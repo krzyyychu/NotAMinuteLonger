@@ -17,6 +17,6 @@ class ActivityDataEncoder(JSONEncoder):
 
 
 if __name__ == "__main__":
-    am = ActivityData(stopwatch_count=3)
+    am = ActivityData()
 
     print(ActivityDataEncoder().encode(am))

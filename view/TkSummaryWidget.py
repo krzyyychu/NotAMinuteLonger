@@ -12,5 +12,5 @@ class TkSummaryWidget(tkinter.Frame):
         self.tk_total_time = tkinter.Label(self, textvariable=self._time_string)
         self.tk_total_time.pack(side=tkinter.RIGHT)
 
-    def update_time_label(self, time_sum: str) -> None:
+    def set_time(self, time_sum: str) -> None:
         self._time_string.set(time_sum)

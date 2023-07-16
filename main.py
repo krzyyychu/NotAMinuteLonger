@@ -9,14 +9,14 @@ from model.ActivityDataEncoder import ActivityDataEncoder
 
 class NotAMinuteLongerApp:
     def __init__(self):
-        self.search_for_saved_settings()
-        self.search_for_recovery_files()
         self.root = Tk()
-        self.am = ActivityManager(self.root)
-
         self.root.title("ActivityTracker")
         self.root.resizable(width="false", height="false")
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+
+        self.am = ActivityManager(self.root)
+        self.search_for_saved_settings()
+        self.search_for_recovery_files()
 
         self.menubar = Menu(self.root)
         self.root.config(menu=self.menubar)
@@ -24,8 +24,11 @@ class NotAMinuteLongerApp:
         self.settings_menu.add_command(label="Settings", command=self.open_settings)
         self.menubar.add_cascade(label="Settings", menu=self.settings_menu)
 
-        self.root.mainloop()
 
+
+        self.root.lift()
+        self.root.attributes("-topmost", True) # TODO: add to settings
+        self.root.mainloop()
 
     def search_for_saved_settings(self):
         pass
@@ -40,14 +43,20 @@ class NotAMinuteLongerApp:
                  os.path.isfile(f) and re.search("^" + recovery_filename + "[_0-9]*\.json", f)]
         if files:
             files.sort()
-            messagebox.showinfo("Previous activity found!", f"Found a recovery file from today: {files.pop()}.")
-            self.recover_activity_data()
-        for f in files:
-            print(f)
+            latest_activity_file = files.pop()
+            self.root.update()  # workaround for bug in tkinter that do not allow focusing on Entry widgets
+            messagebox.showinfo(
+                "Previous activity found!",
+                f"Found a recovery file from today: {latest_activity_file}.",
+                parent=self.root)
+            self.recover_activity_data(latest_activity_file)
 
-    def recover_activity_data(self):
-        #TODO: expand this functionality
+    def recover_activity_data(self, latest_activity_file):
         print("recovering!")
+        with open(latest_activity_file, 'r') as file:
+            recovered_data = json.load(file)
+            print(recovered_data)
+        self.am.update_model_from_json(recovered_data)
 
     @staticmethod
     def create_file_name():
