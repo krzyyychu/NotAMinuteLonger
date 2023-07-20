@@ -2,15 +2,13 @@ import tkinter
 
 from tkinter import Frame, Button, Tk
 
-from StopwatchWidget import StopwatchWidget
-from SummaryWidget import SummaryWidget
-
-from controller.ActivityManager import ActivityManager
+from view.StopwatchWidget import StopwatchWidget
+from view.SummaryWidget import SummaryWidget
 
 
 class TopLevelWidget(Frame):
     """top level frame containing stopwatches, add/remove buttons and summary"""
-    def __init__(self, tk_parent, controller, stopwatch_count=5, *args, **kwargs):
+    def __init__(self, tk_parent, controller, stopwatch_count=5, add_stopwatch_callback=None, *args, **kwargs):
         Frame.__init__(self, tk_parent, *args, **kwargs)
         self.parent = tkinter.Frame(tk_parent, **kwargs)
         self._controller = controller
@@ -18,6 +16,7 @@ class TopLevelWidget(Frame):
         # create list of stopwatch views
         self.num_of_stopwatches = stopwatch_count
         self.widget_list = []
+        self._add_stopwatch_callback = add_stopwatch_callback
 
         self.draw()
 
@@ -29,6 +28,15 @@ class TopLevelWidget(Frame):
         for w in self.widget_list:
             w.pack(fill="x")
         self.parent.pack()
+
+    def set_stopwatch_time(self, stopwatch_id, value):
+        self.widget_list[stopwatch_id].set_time(value)
+
+    def set_stopwatch_description(self, stopwatch_id, value):
+        self.widget_list[stopwatch_id].set_task_description(value)
+
+    def set_summary(self, value):
+        self.widget_list[-1].set_time(value)
 
     def _add_stopwatches(self):
         for stopwatch_id in range(self.num_of_stopwatches):
@@ -48,19 +56,20 @@ class TopLevelWidget(Frame):
             Button(
                 self.parent,
                 text="+",
-                command=self._button_clicked))
+                command=self._add_stopwatch_clicked))
 
     def _add_summary(self):
         self.widget_list.append(
             SummaryWidget(self.parent))
 
-    def _button_clicked(self):
-        print("clicked!")
+    def _add_stopwatch_clicked(self):
         self.num_of_stopwatches += 1
         for w in self.widget_list:
             w.destroy()
         self.widget_list.clear()
         self.draw()
+        self._add_stopwatch_callback()
+
 
 
 class ActivityManagerMock:
@@ -76,7 +85,7 @@ class ActivityManagerMock:
     def notice_entry_update(self, *args, **kwargs):
         pass
 
-    def add_clicked( *args, **kwargs):
+    def add_clicked(*args, **kwargs):
         pass
 
 

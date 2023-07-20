@@ -14,7 +14,7 @@ class StopwatchData:
 
 
 class ActivityData:
-    STOPWATCHES_LIMIT = 20 # to be moved to settings?
+    STOPWATCHES_LIMIT = 20
 
     def __init__(self):
         self._stopwatch_data = []
@@ -32,7 +32,7 @@ class ActivityData:
     def expand_to_requested_size(self, new_size):
         self.validate_requested_size(new_size)
         while new_size >= self.length():
-            self._stopwatch_data.append(StopwatchData(self.length()))
+            self._stopwatch_data.append(StopwatchData(self.length))
 
     def add_stopwatches_from_json_list(self, stopwatch_list: list[dict]):
         """Expected input:
