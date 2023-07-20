@@ -1,7 +1,7 @@
 import tkinter
 
 
-class TkStopwatchWidget(tkinter.Frame):
+class StopwatchWidget(tkinter.Frame):
     """Simple stopwatch widget"""
 
     def __init__(
@@ -61,17 +61,17 @@ class TkStopwatchWidget(tkinter.Frame):
 
 
 def demo():
-    def stop_clicked(id):
-        print(f"{id}: stop clicked!")
+    def stop_clicked(stopwatch_id):
+        print(f"{stopwatch_id}: stop clicked!")
 
-    def start_clicked(id):
-        print(f"{id}: start clicked")
+    def start_clicked(stopwatch_id):
+        print(f"{stopwatch_id}: start clicked")
 
-    def task_name_changed(id, text):
-        print(f"{id}: entry changed, new value: {text}")
+    def task_name_changed(stopwatch_id, text):
+        print(f"{stopwatch_id}: entry changed, new value: {text}")
 
     root = tkinter.Tk()
-    widget = TkStopwatchWidget(
+    widget = StopwatchWidget(
         root,
         stopwatch_id=0,
         start_button_callback=start_clicked,

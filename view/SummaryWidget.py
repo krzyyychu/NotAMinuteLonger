@@ -1,7 +1,7 @@
 import tkinter
 
 
-class TkSummaryWidget(tkinter.Frame):
+class SummaryWidget(tkinter.Frame):
     def __init__(self, parent: tkinter.Frame, **kw):
         tkinter.Frame.__init__(self, parent, kw)
         self.parent = parent

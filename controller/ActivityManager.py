@@ -2,8 +2,8 @@ import tkinter
 import time
 
 from controller.ActivityTracker import ActivityTracker
-from view.TkStopwatchWidget import TkStopwatchWidget
-from view.TkSummaryWidget import TkSummaryWidget
+from view.StopwatchWidget import StopwatchWidget
+from view.SummaryWidget import SummaryWidget
 from model.ActivityData import ActivityData
 from utils.time_utils import formatted_time
 
@@ -21,6 +21,7 @@ class ActivityManager:
 
     Does:
     manages stopwatch list so only 1 stopwatch runs in parallel
+    TODO: extract tk elements to single top layer widget
     """
 
     def __init__(self, tk_parent, stopwatch_count=5, inactivity_period=3, **kw):
@@ -30,7 +31,7 @@ class ActivityManager:
         self.num_of_stopwatches = stopwatch_count
         self.stopwatches = []
         for stopwatch_id in range(stopwatch_count):
-            stopwatch = TkStopwatchWidget(
+            stopwatch = StopwatchWidget(
                 tk_parent=self.frame,
                 stopwatch_id=stopwatch_id,
                 start_button_callback=self.notice_start,
@@ -38,8 +39,11 @@ class ActivityManager:
                 entry_update_callback=self.notice_entry_update)
             self.stopwatches.append(stopwatch)
             stopwatch.pack()
-        self.summary = TkSummaryWidget(self.frame)
+        self.add_button = tkinter.Button(self.frame, text="+", command=self.add_clicked)
+        self.add_button.pack(side=tkinter.LEFT)
+        self.summary = SummaryWidget(self.frame)
         self.summary.pack()
+
         self.frame.pack()
 
         # create corresponding models
@@ -92,6 +96,18 @@ class ActivityManager:
         self.activity_data.add_stopwatches_from_json_list(new_stopwatch_data["stopwatches"])
         self.activity_data.expand_to_requested_size(self.num_of_stopwatches)
         self.update_all_widgets()
+
+    def add_clicked(self):
+        stopwatch = StopwatchWidget(
+            tk_parent=self.frame,
+            stopwatch_id=self.num_of_stopwatches,
+            start_button_callback=self.notice_start,
+            stop_button_callback=self.notice_stop,
+            entry_update_callback=self.notice_entry_update)
+        self.num_of_stopwatches += 1
+        self.stopwatches.append(stopwatch)
+        stopwatch.pack()
+        self.frame.update()
 
 
 if __name__ == "__main__":
