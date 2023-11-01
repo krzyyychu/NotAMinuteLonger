@@ -40,7 +40,7 @@ class NotAMinuteLongerApp:
         recovery_filename = "tasks_" + datetime.now().strftime("%Y_%m_%d")
         # print(recovery_filename)
         files = [f for f in os.listdir(current_dir) if
-                 os.path.isfile(f) and re.search("^" + recovery_filename + "[_0-9]*\.json", f)]
+                 os.path.isfile(f) and re.search("^" + recovery_filename + "[_0-9]*\\.json", f)]
         if files:
             files.sort()
             latest_activity_file = files.pop()
