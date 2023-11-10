@@ -3,6 +3,7 @@ import tkinter
 from controller.ActivityTracker import ActivityTracker
 from view.TopLevelWidget import TopLevelWidget
 from model.Activities import Activities
+from model.Settings import Settings
 from utils.time_utils import formatted_time
 
 
@@ -27,7 +28,8 @@ class ActivityManager:
         self.activity_tracker = ActivityTracker(inactivity_period, self.on_active_tick)
 
         # create corresponding models
-        self.activity_data = Activities()
+        self.settings = Settings()
+        self.activity_data = Activities(self.settings)
 
         # create view
         self.main_view = TopLevelWidget(
